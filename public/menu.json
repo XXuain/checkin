@@ -1,0 +1,162 @@
+{
+  "categories": [
+    {
+      "id": "pure-tea",
+      "name": "純粹茶 2.0",
+      "subtitle": "嚴選台灣茶．全面升級",
+      "commonNotes": ["＃加購加料量到【150ml】，料少量到【100ml】"]
+    },
+    {
+      "id": "traditional",
+      "name": "古早味柴燒",
+      "subtitle": "遵循古法．甘醇香甜",
+      "commonNotes": ["＃加購加料量到【150ml】，料少量到【100ml】", "＃冬瓜不用多+5殘留，其他原汁要多+5"]
+    }
+  ],
+  "items": [
+    {
+      "id": "mihong",
+      "name": "日月潭蜜香紅",
+      "categoryId": "pure-tea",
+      "price": 35,
+      "recipeId": "pure-tea-brown",
+      "icons": { "recommend": false, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "tieguanyin",
+      "name": "焙香鐵觀音",
+      "categoryId": "pure-tea",
+      "price": 35,
+      "recipeId": "pure-tea-brown",
+      "icons": { "recommend": false, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "chunya-green",
+      "name": "頂級春芽綠",
+      "categoryId": "pure-tea",
+      "price": 35,
+      "recipeId": "pure-tea-white",
+      "icons": { "recommend": true, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "yunwu",
+      "name": "淺焙雲霧青",
+      "categoryId": "pure-tea",
+      "price": 35,
+      "recipeId": "pure-tea-white",
+      "icons": { "recommend": true, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "qiaomai-green",
+      "name": "真．蕎麥輕綠茶",
+      "categoryId": "pure-tea",
+      "price": 35,
+      "recipeId": "pure-tea-white",
+      "icons": { "recommend": true, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "barley",
+      "name": "黃金大麥茶",
+      "categoryId": "pure-tea",
+      "price": 30,
+      "recipeId": "barley-tea",
+      "icons": { "recommend": false, "hot": true, "fixedSweet": false, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "winter-melon",
+      "name": "矮冬瓜茶",
+      "categoryId": "traditional",
+      "price": 40,
+      "recipeId": "donggua",
+      "icons": { "recommend": false, "hot": false, "fixedSweet": true, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "winter-melon-green",
+      "name": "矮冬瓜青",
+      "categoryId": "traditional",
+      "price": 45,
+      "recipeId": "donggua-green",
+      "icons": { "recommend": false, "hot": false, "fixedSweet": true, "fixedIce": false },
+      "canAddTopping": true
+    },
+    {
+      "id": "winter-melon-lemon",
+      "name": "矮冬瓜檸檬",
+      "categoryId": "traditional",
+      "price": 55,
+      "recipeId": "donggua-lemon",
+      "icons": { "recommend": true, "hot": false, "fixedSweet": true, "fixedIce": false },
+      "canAddTopping": true
+    }
+  ],
+  "recipes": [
+    {
+      "id": "pure-tea-brown",
+      "sugarLevels": { "1分糖": "10", "2分糖": "20", "微糖": "30", "半糖": "40", "少糖": "50", "正常": "60", "黃金比例": "60", "不要太甜": "50", "無糖": "0" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少": "300", "微去": "350", "去冰": "400", "溫熱": "500" },
+      "iceSteps": ["➀對應冰量，加茶到炫杯", "➁加糖到炫杯", "➂正少微去，加冰到600，炫", "➂溫熱打熱後，加熱水到600，炫"],
+      "hotSteps": ["➀加糖到炫杯", "➁茶打熱", "➂加熱水到600，炫"],
+      "notes": ["＃【蜜香紅／鐵觀音】要炫到變色，顏色有變淺即可", "＃紅糖要多+5(會殘留)", "【去冰／常溫／溫／熱】升1階糖", "【加料】不升糖，糖量-5"],
+      "sugarStepUpOnNoIce": true,
+      "toppingOffset": 5
+    },
+    {
+      "id": "pure-tea-white",
+      "sugarLevels": { "1分糖": "4", "2分糖": "8", "微糖": "12", "半糖": "20", "少糖": "30", "正常": "40", "黃金比例": "40", "不要太甜": "30", "無糖": "0" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少": "300", "微去": "350", "去冰": "400", "溫熱": "500" },
+      "iceSteps": ["➀對應冰量，加茶到炫杯", "➁加糖到炫杯", "➂正少微去，加冰到600，炫", "➂常溫，加冰水到600，炫"],
+      "hotSteps": ["➀加糖到炫杯", "➁茶打熱", "➂加熱水到600，炫"],
+      "notes": ["＃加購加料量到【150ml】，料少量到【100ml】"]
+    },
+    {
+      "id": "barley-tea",
+      "sugarLevels": { "1分糖": "10", "2分糖": "20", "微糖": "30", "半糖": "40", "少糖": "50", "正常": "60", "黃金比例": "60", "不要太甜": "50", "無糖": "0" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少": "300", "微去": "350", "去冰": "400", "溫熱": "500" },
+      "iceSteps": ["➀加冰塊量、紅糖到炫杯", "➁麥茶加到600，炫"],
+      "hotSteps": ["➀加紅糖到炫杯", "➁麥茶加到600，打熱，炫"],
+      "notes": ["＃紅糖要多+5(會殘留)", "【去冰】升1階糖", "【加料】糖量-5"]
+    },
+    {
+      "id": "donggua",
+      "sugarLevels": { "黃金比例": "固定" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少微": "冬瓜80", "去冰": "冬瓜90" },
+      "iceSteps": ["➀冬瓜", "➁冰水100c.c", "➂對應冰量，加茶到炫杯", "➃冰塊加到600，炫"],
+      "notes": ["＃甜度固定"]
+    },
+    {
+      "id": "donggua-green",
+      "sugarLevels": { "黃金比例": "固定" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少微": "冬瓜", "去冰": "冬瓜" },
+      "iceSteps": ["➀冬瓜", "➁加冰塊", "➂麥茶加到600，炫"],
+      "notes": ["＃甜度固定"]
+    },
+    {
+      "id": "donggua-lemon",
+      "sugarLevels": { "黃金比例": "固定" },
+      "iceAmounts": { "正常": "16-18顆", "少冰": "12-14顆", "微冰": "8-10顆", "去冰": "4顆", "完去": "2顆【外送/自取】" },
+      "teaAmounts": { "正少微": "冬瓜100、檸檬25", "去冰": "冬瓜110、檸檬30" },
+      "iceSteps": ["➀奇芽子放紙杯", "➁冬瓜、檸檬", "➂加冰塊", "➃冰水加到500，炫"],
+      "notes": ["＃甜度固定", "奇芽子量到150ml"]
+    }
+  ],
+  "toppings": [
+    { "id": "chia", "name": "奇芽籽", "addPrice": 10 },
+    { "id": "coconut", "name": "椰果", "addPrice": 10 },
+    { "id": "pearl", "name": "珍珠", "addPrice": 10 },
+    { "id": "taro-ball", "name": "小芋圓", "addPrice": 15 },
+    { "id": "kanten", "name": "寒天", "addPrice": 15 },
+    { "id": "pudding", "name": "布丁", "addPrice": 15 }
+  ]
+}
