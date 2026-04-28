@@ -3,26 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>果然好滋味</title>
+    <title>果然好滋味 · 品項一覽</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-menu-data-path="data/fruity.json" data-sugar-data-path="data/sugar.json">
     <div class="page">
       <header class="header">
         <p><a class="back-link" href="index.html">← 回首頁</a></p>
-        <h1 class="title">果然好滋味</h1>
-        <p class="subtitle">頁面建置中，內容稍後補上。</p>
+        <h1 class="title" id="page-title">載入中…</h1>
+        <p class="subtitle" id="page-subtitle"></p>
+        <div
+          class="sugar-filter"
+          id="sugar-filter"
+          role="group"
+          aria-label="糖分表顯示篩選"
+          hidden
+        >
+          <span class="sugar-filter__label">糖分表</span>
+          <div class="sugar-filter__buttons"></div>
+        </div>
       </header>
 
       <main>
-        <ul class="item-grid">
-          <li class="item-card">
-            <div class="item-card__body">
-              目前尚無品項資料。
-            </div>
-          </li>
-        </ul>
+        <ul class="item-grid" id="item-grid" aria-live="polite"></ul>
       </main>
+
+      <footer class="footer" id="footer-notes"></footer>
     </div>
+
+    <script type="module" src="app.js"></script>
   </body>
 </html>

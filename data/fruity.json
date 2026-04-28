@@ -17,6 +17,12 @@
         "tea_in_shaker": "加茶",
         "fill_ice_600": "冰塊加到 600ml，炫。"
     },
+    "sugar_with_add_on": {
+        "std-1-2-5-10": "add-0-0-0-5",
+        "std-5-10-15-20": "add-3-6-10-15",
+        "std-10-20-30-40": "add-8-16-25-35",
+        "std-13-26-40-50": "add-11-23-35-45"
+    },
     "categories": [
         {
             "id": "fruity-blackberry-honey",
