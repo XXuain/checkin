@@ -66,7 +66,7 @@
         },
         {
             "id": "mojito-pineapple",
-            "name": "鳳梨摩奇多",
+            "name": "鳳梨檸檬摩奇多",
             "ingredients_base": [
                 { "label": "檸檬原汁", "amount": 20, "unit": "ml" },
                 { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }

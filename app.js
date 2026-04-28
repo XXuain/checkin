@@ -109,6 +109,13 @@ function escapeHtml(s) {
         .replace(/"/g, '&quot;')
 }
 
+const SUGAR_PRESET_FILTER_OPTIONS = [
+    'std-1-2-5-10',
+    'std-5-10-15-20',
+    'std-10-20-30-40',
+    'std-13-26-40-50',
+]
+
 function renderCard(cat, sharedSteps, sugarData, sugarFilter = 'all') {
     const ingredients = (cat.ingredients_base ?? [])
         .map((row) => `<li>${escapeHtml(formatIngredient(row))}</li>`)
@@ -155,6 +162,10 @@ async function main() {
     const subEl = document.getElementById('page-subtitle')
     const grid = document.getElementById('item-grid')
     const footer = document.getElementById('footer-notes')
+    const sugarFilterWrap = document.getElementById('sugar-filter')
+    const sugarFilterButtons = sugarFilterWrap?.querySelector(
+        '.sugar-filter__buttons',
+    )
 
     try {
         const [mojito, sugar] = await Promise.all([
@@ -162,14 +173,49 @@ async function main() {
             loadJson('data/sugar.json'),
         ])
 
+        let currentPresetFilter = SUGAR_PRESET_FILTER_OPTIONS[0]
         const sharedSteps = mojito.shared_steps ?? {}
+        const categories = mojito.categories ?? []
+        const totalCount = categories.length
         titleEl.textContent = mojito.meta?.title ?? '品項一覽'
-        subEl.textContent = `${mojito.categories?.length ?? 0} 項飲品 · 對照 data 目錄`
+        function renderList() {
+            const filtered = categories.filter(
+                (c) => c.sugar_preset_ref === currentPresetFilter,
+            )
+            const html = filtered.map((c) => renderCard(c, sharedSteps, sugar))
+            grid.innerHTML = html.join('')
+            subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${currentPresetFilter}`
+        }
 
-        const html = (mojito.categories ?? []).map((c) =>
-            renderCard(c, sharedSteps, sugar),
-        )
-        grid.innerHTML = html.join('')
+        if (sugarFilterWrap && sugarFilterButtons) {
+            sugarFilterWrap.hidden = false
+            sugarFilterButtons.innerHTML = SUGAR_PRESET_FILTER_OPTIONS.map(
+                (preset) => {
+                    const pressed = preset === currentPresetFilter
+                    return `<button type="button" data-filter="${escapeHtml(preset)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(preset)}</button>`
+                },
+            ).join('')
+
+            sugarFilterButtons.addEventListener('click', (event) => {
+                const target = event.target
+                if (!(target instanceof HTMLButtonElement)) return
+                const selected = target.dataset.filter
+                if (!selected || !SUGAR_PRESET_FILTER_OPTIONS.includes(selected))
+                    return
+                currentPresetFilter = selected
+
+                for (const btn of sugarFilterButtons.querySelectorAll(
+                    'button[data-filter]',
+                )) {
+                    const active = btn.dataset.filter === currentPresetFilter
+                    btn.classList.toggle('is-active', active)
+                    btn.setAttribute('aria-pressed', active ? 'true' : 'false')
+                }
+                renderList()
+            })
+        }
+
+        renderList()
 
         const globalNotes = normalizeNotes(mojito.meta?.note)
         if (globalNotes.length) {
