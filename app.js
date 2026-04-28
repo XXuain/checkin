@@ -100,14 +100,18 @@ function sugarRowsHtml(
     const blocks = []
     if (baseVals && showBase) {
         blocks.push(`
-      <p class="section-label subsection">標準糖分</p>
-      <ul class="sugar-rows">${buildTierRows(tiers, baseVals)}</ul>
+      <section class="sugar-pane">
+        <p class="section-label subsection">標準糖分</p>
+        <ul class="sugar-rows">${buildTierRows(tiers, baseVals)}</ul>
+      </section>
     `)
     }
     if (addonVals && showAddon) {
         blocks.push(`
-      <p class="section-label subsection" style="margin-top:0.85rem">加料減糖</p>
-      <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
+      <section class="sugar-pane">
+        <p class="section-label subsection">加料減糖</p>
+        <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
+      </section>
     `)
     }
 
@@ -127,7 +131,7 @@ function sugarRowsHtml(
     return `
     <div class="sugar-detail">
       <p class="section-label">${escapeHtml(presetKey)}</p>
-      ${blocks.join('')}
+      <div class="sugar-pane-grid">${blocks.join('')}</div>
     </div>
   `
 }
@@ -200,9 +204,6 @@ function renderCard(
     <li class="item-card" data-id="${escapeHtml(cat.id ?? '')}">
       <div class="item-card__head">
         <h2 class="item-card__name">${escapeHtml(cat.name ?? '')}</h2>
-        <div class="item-card__sugar">
-          糖分表 <code>${escapeHtml(presetKey)}</code>
-        </div>
       </div>
       <div class="item-card__body">
         <p class="section-label">原汁／配料</p>
