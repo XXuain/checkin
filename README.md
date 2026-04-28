@@ -7,7 +7,7 @@
 ### Python（macOS 常見已內建）
 
 ```bash
-cd checkin2.0
+cd checkin
 python3 -m http.server 8765
 ```
 
@@ -24,10 +24,10 @@ npx --yes serve .
 
 ## 檔案說明
 
-| 路徑                     | 說明                     |
-| ------------------------ | ------------------------ |
-| `index.html`             | 入口頁                   |
-| `app.js`                 | 載入資料與組版           |
-| `styles.css`             | 樣式                     |
-| `data/mojito-water.json` | 品項、步驟、共用步驟文案 |
+| 路徑                     | 說明                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| `index.html`             | 入口頁                                                                         |
+| `app.js`                 | 載入資料與組版                                                                 |
+| `styles.css`             | 樣式                                                                           |
+| `data/mojito-water.json` | 品項、步驟、共用步驟文案                                                       |
 | `data/sugar.json`        | 糖階、每組 `sugar_presets` 內含「標準糖分 `base`」與「加料減糖 `with_add_on`」 |
