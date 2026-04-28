@@ -60,6 +60,18 @@ function parseAddOnPreset(addOnPreset, tiers) {
     return parsed
 }
 
+function getSugarPresetRef(cat) {
+    return cat?.sugar_amount?.preset_ref ?? cat?.sugar_preset_ref ?? ''
+}
+
+function getSugarAdjustmentRef(cat) {
+    return (
+        cat?.sugar_amount?.with_no_ice_and_material_ref ??
+        cat?.sugar_amount?.with_no_ice_ref ??
+        getSugarPresetRef(cat)
+    )
+}
+
 function teaRowsHtml(cat, teaPresets = {}, iceTiers = []) {
     const teaPresetRef = cat?.tea_with_ice_ref
     if (!teaPresetRef) return ''
@@ -135,6 +147,7 @@ function iceAmountHtml(cat, icePresets = {}, iceTiers = []) {
 function sugarRowsHtml(
     sugarData,
     presetKey,
+    adjustmentRef,
     sugarFilter = 'all',
     sugarAddOnMap = {},
     sugarAdjustmentLabel = '加料減糖',
@@ -164,7 +177,10 @@ function sugarRowsHtml(
         addonVals = null
     }
     if (!addonVals) {
-        addonVals = parseAddOnPreset(sugarAddOnMap?.[presetKey], tiers)
+        addonVals = parseAddOnPreset(
+            sugarAddOnMap?.[adjustmentRef ?? presetKey],
+            tiers,
+        )
     }
 
     const showBase = sugarFilter === 'all' || sugarFilter === 'base'
@@ -232,7 +248,7 @@ function collectPresetFilters(categories = []) {
     const inUse = Array.from(
         new Set(
             categories
-                .map((c) => c?.sugar_preset_ref)
+                .map((c) => getSugarPresetRef(c))
                 .filter(
                     (preset) => typeof preset === 'string' && preset.length,
                 ),
@@ -298,10 +314,12 @@ function renderCard(
               .join('')}</ul></div>`
         : ''
 
-    const presetKey = cat.sugar_preset_ref ?? ''
+    const presetKey = getSugarPresetRef(cat)
+    const adjustmentRef = getSugarAdjustmentRef(cat)
     const sugarBlock = sugarRowsHtml(
         sugarData,
         presetKey,
+        adjustmentRef,
         sugarFilter,
         sugarAddOnMap,
         sugarAdjustmentLabel,
@@ -352,7 +370,9 @@ async function main() {
         '.sugar-filter__buttons',
     )
     const teaFilterWrap = document.getElementById('tea-filter')
-    const teaFilterButtons = teaFilterWrap?.querySelector('.sugar-filter__buttons')
+    const teaFilterButtons = teaFilterWrap?.querySelector(
+        '.sugar-filter__buttons',
+    )
 
     try {
         const [menuData, sugar, iceData] = await Promise.all([
@@ -363,7 +383,10 @@ async function main() {
 
         const sharedSteps = menuData.shared_steps ?? {}
         const sugarAddOnMap =
-            menuData[sugarAdjustmentMapKey] ?? menuData.sugar_with_add_on ?? {}
+            menuData[sugarAdjustmentMapKey] ??
+            menuData.sugar_with_no_ice_and_material_presets ??
+            menuData.sugar_with_add_on ??
+            {}
         const teaPresets = menuData.tea_with_ice_presets ?? {}
         const iceTiers = iceData?.ice_tiers ?? []
         const icePresets = iceData?.ice_presets ?? {}
@@ -376,11 +399,12 @@ async function main() {
         const totalCount = categories.length
         titleEl.textContent = menuData.meta?.title ?? '品項一覽'
         function renderList() {
-            const byPreset = currentPresetFilter !== 'all'
-                ? categories.filter(
-                      (c) => c.sugar_preset_ref === currentPresetFilter,
-                  )
-                : categories
+            const byPreset =
+                currentPresetFilter !== 'all'
+                    ? categories.filter(
+                          (c) => getSugarPresetRef(c) === currentPresetFilter,
+                      )
+                    : categories
             const byIngredient = byPreset.filter((c) => {
                 if (currentIngredientFilter === 'all') return true
                 return (c.ingredients_base ?? []).some((row) =>
@@ -485,7 +509,8 @@ async function main() {
                 for (const btn of ingredientFilterButtons.querySelectorAll(
                     'button[data-filter]',
                 )) {
-                    const active = btn.dataset.filter === currentIngredientFilter
+                    const active =
+                        btn.dataset.filter === currentIngredientFilter
                     btn.classList.toggle('is-active', active)
                     btn.setAttribute('aria-pressed', active ? 'true' : 'false')
                 }
