@@ -1,6 +1,6 @@
 # checkin2.0 · 鮮果氣泡飲品項一覽
 
-靜態網頁讀取 `data/mojito-water.json` 與 `data/sugar.json`，請用本機 HTTP 開啟專案目錄（勿用 `file://` 直接開 `index.html`，否則可能無法載入 JSON）。
+靜態網頁讀取 `data/mojito.json` 與 `data/sugar.json`，請用本機 HTTP 開啟專案目錄（勿用 `file://` 直接開 `index.html`，否則可能無法載入 JSON）。
 
 ## 啟動方式（擇一）
 
@@ -24,10 +24,10 @@ npx --yes serve .
 
 ## 檔案說明
 
-| 路徑                     | 說明                                                                           |
-| ------------------------ | ------------------------------------------------------------------------------ |
-| `index.html`             | 入口頁                                                                         |
-| `app.js`                 | 載入資料與組版                                                                 |
-| `styles.css`             | 樣式                                                                           |
-| `data/mojito-water.json` | 品項、步驟、共用步驟文案                                                       |
-| `data/sugar.json`        | 糖階、每組 `sugar_presets` 內含「標準糖分 `base`」與「加料減糖 `with_add_on`」 |
+| 路徑               | 說明                                                                           |
+| ------------------ | ------------------------------------------------------------------------------ |
+| `index.html`       | 入口頁                                                                         |
+| `app.js`           | 載入資料與組版                                                                 |
+| `styles.css`       | 樣式                                                                           |
+| `data/mojito.json` | 品項、步驟、共用步驟文案                                                       |
+| `data/sugar.json`  | 糖階、每組 `sugar_presets` 內含「標準糖分 `base`」與「加料減糖 `with_add_on`」 |

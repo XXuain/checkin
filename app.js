@@ -60,7 +60,12 @@ function parseAddOnPreset(addOnPreset, tiers) {
     return parsed
 }
 
-function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all', sugarAddOnMap = {}) {
+function sugarRowsHtml(
+    sugarData,
+    presetKey,
+    sugarFilter = 'all',
+    sugarAddOnMap = {},
+) {
     const preset = sugarData?.sugar_presets?.[presetKey] ?? null
     const tiers = sugarData?.sugar_tiers ?? []
     if (!preset) {
@@ -206,7 +211,7 @@ async function main() {
 
     try {
         const [mojito, sugar] = await Promise.all([
-            loadJson('data/mojito-water.json'),
+            loadJson('data/mojito.json'),
             loadJson('data/sugar.json'),
         ])
 
@@ -240,7 +245,10 @@ async function main() {
                 const target = event.target
                 if (!(target instanceof HTMLButtonElement)) return
                 const selected = target.dataset.filter
-                if (!selected || !SUGAR_PRESET_FILTER_OPTIONS.includes(selected))
+                if (
+                    !selected ||
+                    !SUGAR_PRESET_FILTER_OPTIONS.includes(selected)
+                )
                     return
                 currentPresetFilter = selected
 
