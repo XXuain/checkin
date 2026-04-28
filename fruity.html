@@ -12,6 +12,7 @@
         data-ice-data-path="data/ice.json"
         data-sugar-adjustment-map-key="sugar_with_no_ice"
         data-sugar-adjustment-label="去冰升糖"
+        data-ingredient-filter-options="多多,檸檬汁,柳橙汁,百香汁,蘋果汁"
     >
         <div class="page">
             <header class="header">
@@ -26,6 +27,26 @@
                     hidden
                 >
                     <span class="sugar-filter__label">糖分表</span>
+                    <div class="sugar-filter__buttons"></div>
+                </div>
+                <div
+                    class="sugar-filter"
+                    id="ingredient-filter"
+                    role="group"
+                    aria-label="成分篩選"
+                    hidden
+                >
+                    <span class="sugar-filter__label">成分表</span>
+                    <div class="sugar-filter__buttons"></div>
+                </div>
+                <div
+                    class="sugar-filter"
+                    id="tea-filter"
+                    role="group"
+                    aria-label="茶量篩選"
+                    hidden
+                >
+                    <span class="sugar-filter__label">茶量</span>
                     <div class="sugar-filter__buttons"></div>
                 </div>
             </header>

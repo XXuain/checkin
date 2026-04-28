@@ -43,7 +43,7 @@
             "id": "fruity-blackberry-honey",
             "name": "桑椹蜜香紅",
             "ingredients_base": [
-                { "label": "桑椹原汁", "amount": 80, "unit": "ml" }
+                { "label": "桑椹汁", "amount": 80, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
@@ -63,7 +63,7 @@
             "id": "fruity-apple",
             "name": "完熟頻果紅/綠茶",
             "ingredients_base": [
-                { "label": "蘋果原汁", "amount": 70, "unit": "ml" }
+                { "label": "蘋果汁", "amount": 70, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
@@ -125,7 +125,7 @@
             "name": "百香 鳳梨 青/綠茶",
             "ingredients_base": [
                 { "label": "檸檬汁", "amount": 10, "unit": "ml" },
-                { "label": "百香原汁", "amount": 20, "unit": "ml" },
+                { "label": "百香汁", "amount": 20, "unit": "ml" },
                 { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
@@ -204,7 +204,7 @@
             "id": "fruity-orange-green",
             "name": "鮮柳橙青／綠",
             "ingredients_base": [
-                { "label": "柳橙原汁", "amount": 150, "unit": "ml" }
+                { "label": "柳橙汁", "amount": 150, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-10-20-30-40",
             "tea_with_ice_ref": "std-400-400-450-450",
@@ -222,7 +222,7 @@
             "id": "fruity-orange-lemon-green",
             "name": "鮮橙檸檬青／綠",
             "ingredients_base": [
-                { "label": "柳橙原汁", "amount": 150, "unit": "ml" },
+                { "label": "柳橙汁", "amount": 150, "unit": "ml" },
                 { "label": "檸檬汁", "amount": 20, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-10-20-30-40",

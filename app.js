@@ -114,7 +114,9 @@ function iceAmountHtml(cat, icePresets = {}, iceTiers = []) {
         return `
     <div class="ice-detail">
       <p class="section-label">冰量</p>
-      <ul class="ice-rows">${rows}</ul>
+      <div class="ice-pane-card">
+        <ul class="ice-rows">${rows}</ul>
+      </div>
     </div>
   `
     }
@@ -245,6 +247,29 @@ function collectPresetFilters(categories = []) {
     return [...orderedKnown, ...customPresets]
 }
 
+function collectTeaFilters(categories = []) {
+    return Array.from(
+        new Set(
+            categories
+                .map((c) => c?.tea_with_ice_ref)
+                .filter((ref) => typeof ref === 'string' && ref.length),
+        ),
+    )
+}
+
+function parseIngredientFilterOptions(raw = '') {
+    if (!raw || typeof raw !== 'string') return []
+    return raw
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0)
+}
+
+function formatPresetLabel(preset) {
+    if (typeof preset !== 'string') return String(preset ?? '')
+    return preset.replace(/^std-/, '')
+}
+
 function renderCard(
     cat,
     sharedSteps,
@@ -311,6 +336,9 @@ async function main() {
     const sugarAdjustmentMapKey =
         pageConfig.sugarAdjustmentMapKey || 'sugar_with_add_on'
     const sugarAdjustmentLabel = pageConfig.sugarAdjustmentLabel || '加料減糖'
+    const ingredientFilterOptions = parseIngredientFilterOptions(
+        pageConfig.ingredientFilterOptions || '',
+    )
     const titleEl = document.getElementById('page-title')
     const subEl = document.getElementById('page-subtitle')
     const grid = document.getElementById('item-grid')
@@ -319,6 +347,12 @@ async function main() {
     const sugarFilterButtons = sugarFilterWrap?.querySelector(
         '.sugar-filter__buttons',
     )
+    const ingredientFilterWrap = document.getElementById('ingredient-filter')
+    const ingredientFilterButtons = ingredientFilterWrap?.querySelector(
+        '.sugar-filter__buttons',
+    )
+    const teaFilterWrap = document.getElementById('tea-filter')
+    const teaFilterButtons = teaFilterWrap?.querySelector('.sugar-filter__buttons')
 
     try {
         const [menuData, sugar, iceData] = await Promise.all([
@@ -335,16 +369,28 @@ async function main() {
         const icePresets = iceData?.ice_presets ?? {}
         const categories = menuData.categories ?? []
         const presetFilterOptions = collectPresetFilters(categories)
-        let currentPresetFilter =
-            presetFilterOptions[0] ?? SUGAR_PRESET_FILTER_OPTIONS[0]
+        const teaFilterOptions = collectTeaFilters(categories)
+        let currentPresetFilter = 'all'
+        let currentIngredientFilter = 'all'
+        let currentTeaFilter = 'all'
         const totalCount = categories.length
         titleEl.textContent = menuData.meta?.title ?? '品項一覽'
         function renderList() {
-            const filtered = currentPresetFilter
+            const byPreset = currentPresetFilter !== 'all'
                 ? categories.filter(
                       (c) => c.sugar_preset_ref === currentPresetFilter,
                   )
                 : categories
+            const byIngredient = byPreset.filter((c) => {
+                if (currentIngredientFilter === 'all') return true
+                return (c.ingredients_base ?? []).some((row) =>
+                    String(row?.label ?? '').includes(currentIngredientFilter),
+                )
+            })
+            const filtered = byIngredient.filter((c) => {
+                if (currentTeaFilter === 'all') return true
+                return c.tea_with_ice_ref === currentTeaFilter
+            })
             const html = filtered.map((c) =>
                 renderCard(
                     c,
@@ -359,10 +405,22 @@ async function main() {
                 ),
             )
             grid.innerHTML = html.join('')
-            if (currentPresetFilter) {
-                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${currentPresetFilter}`
+            const ingredientText =
+                currentIngredientFilter === 'all'
+                    ? '全部'
+                    : currentIngredientFilter
+            const teaText =
+                currentTeaFilter === 'all'
+                    ? '全部'
+                    : formatPresetLabel(currentTeaFilter)
+            const sugarText =
+                currentPresetFilter === 'all'
+                    ? '全部'
+                    : formatPresetLabel(currentPresetFilter)
+            if (presetFilterOptions.length) {
+                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${sugarText} · 成分篩選 ${ingredientText} · 茶量篩選 ${teaText}`
             } else {
-                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品`
+                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 成分篩選 ${ingredientText} · 茶量篩選 ${teaText}`
             }
         }
 
@@ -372,10 +430,13 @@ async function main() {
             presetFilterOptions.length
         ) {
             sugarFilterWrap.hidden = false
-            sugarFilterButtons.innerHTML = presetFilterOptions
+            const options = ['all', ...presetFilterOptions]
+            sugarFilterButtons.innerHTML = options
                 .map((preset) => {
+                    const label =
+                        preset === 'all' ? '全部' : formatPresetLabel(preset)
                     const pressed = preset === currentPresetFilter
-                    return `<button type="button" data-filter="${escapeHtml(preset)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(preset)}</button>`
+                    return `<button type="button" data-filter="${escapeHtml(preset)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(label)}</button>`
                 })
                 .join('')
 
@@ -383,7 +444,7 @@ async function main() {
                 const target = event.target
                 if (!(target instanceof HTMLButtonElement)) return
                 const selected = target.dataset.filter
-                if (!selected || !presetFilterOptions.includes(selected)) return
+                if (!selected || !options.includes(selected)) return
                 currentPresetFilter = selected
 
                 for (const btn of sugarFilterButtons.querySelectorAll(
@@ -397,6 +458,73 @@ async function main() {
             })
         } else if (sugarFilterWrap) {
             sugarFilterWrap.hidden = true
+        }
+
+        if (
+            ingredientFilterWrap &&
+            ingredientFilterButtons &&
+            ingredientFilterOptions.length
+        ) {
+            ingredientFilterWrap.hidden = false
+            const options = ['all', ...ingredientFilterOptions]
+            ingredientFilterButtons.innerHTML = options
+                .map((option) => {
+                    const label = option === 'all' ? '全部' : option
+                    const pressed = option === currentIngredientFilter
+                    return `<button type="button" data-filter="${escapeHtml(option)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(label)}</button>`
+                })
+                .join('')
+
+            ingredientFilterButtons.addEventListener('click', (event) => {
+                const target = event.target
+                if (!(target instanceof HTMLButtonElement)) return
+                const selected = target.dataset.filter
+                if (!selected || !options.includes(selected)) return
+                currentIngredientFilter = selected
+
+                for (const btn of ingredientFilterButtons.querySelectorAll(
+                    'button[data-filter]',
+                )) {
+                    const active = btn.dataset.filter === currentIngredientFilter
+                    btn.classList.toggle('is-active', active)
+                    btn.setAttribute('aria-pressed', active ? 'true' : 'false')
+                }
+                renderList()
+            })
+        } else if (ingredientFilterWrap) {
+            ingredientFilterWrap.hidden = true
+        }
+
+        if (teaFilterWrap && teaFilterButtons && teaFilterOptions.length) {
+            teaFilterWrap.hidden = false
+            const options = ['all', ...teaFilterOptions]
+            teaFilterButtons.innerHTML = options
+                .map((option) => {
+                    const label =
+                        option === 'all' ? '全部' : formatPresetLabel(option)
+                    const pressed = option === currentTeaFilter
+                    return `<button type="button" data-filter="${escapeHtml(option)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(label)}</button>`
+                })
+                .join('')
+
+            teaFilterButtons.addEventListener('click', (event) => {
+                const target = event.target
+                if (!(target instanceof HTMLButtonElement)) return
+                const selected = target.dataset.filter
+                if (!selected || !options.includes(selected)) return
+                currentTeaFilter = selected
+
+                for (const btn of teaFilterButtons.querySelectorAll(
+                    'button[data-filter]',
+                )) {
+                    const active = btn.dataset.filter === currentTeaFilter
+                    btn.classList.toggle('is-active', active)
+                    btn.setAttribute('aria-pressed', active ? 'true' : 'false')
+                }
+                renderList()
+            })
+        } else if (teaFilterWrap) {
+            teaFilterWrap.hidden = true
         }
 
         renderList()
