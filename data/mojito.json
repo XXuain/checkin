@@ -7,8 +7,8 @@
             "非現場等候的客人，等人到再打氣泡水跟冰塊，確保品質",
             "加購加料量到【150ml】，料少量到【100ml】",
             "加料 -5糖。因為料會佔據紙杯容量，氣泡水會減少，因此糖量也要減少不然會太甜不耐喝",
-            "加料一分糖分算法：(加料ml - 5) / 3",
-            "加料二分糖分算法：(加料ml - 5) / 3 x 2"
+            "加料 1分糖分算法：(不要太甜 - 5) / 3",
+            "加料 2分糖分算法：(不要太甜 - 5) / 3 x 2"
         ]
     },
     "shared_steps": {
@@ -33,7 +33,7 @@
             "id": "mojito-lemon",
             "name": "檸檬摩奇多",
             "ingredients_base": [
-                { "label": "檸檬原汁", "amount": 40, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 40, "unit": "ml" },
                 { "label": "薄荷葉", "amount_display": "5-6", "unit": "朵" },
                 { "label": "檸檬片", "amount": 1, "unit": "片" }
             ],
@@ -65,7 +65,7 @@
             "id": "mojito-citrus-honey",
             "name": "蜂蜜柚子摩奇多",
             "ingredients_base": [
-                { "label": "檸檬原汁", "amount": 10, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 10, "unit": "ml" },
                 { "label": "柚子醬", "amount": 125, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
@@ -80,7 +80,7 @@
             "id": "mojito-pineapple",
             "name": "鳳梨檸檬摩奇多",
             "ingredients_base": [
-                { "label": "檸檬原汁", "amount": 20, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 20, "unit": "ml" },
                 { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
@@ -112,7 +112,7 @@
             "name": "桑椹檸檬摩奇多",
             "ingredients_base": [
                 { "label": "桑椹原汁", "amount": 80, "unit": "ml" },
-                { "label": "檸檬原汁", "amount": 20, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 20, "unit": "ml" },
                 { "label": "薄荷葉", "amount": 1, "unit": "朵" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
@@ -160,7 +160,7 @@
             "name": "蘋果西打pro",
             "ingredients_base": [
                 { "label": "蘋果原汁", "amount": 70, "unit": "ml" },
-                { "label": "檸檬原汁", "amount": 5, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 5, "unit": "ml" },
                 { "label": "奇芽子", "amount": 2, "unit": "匙" }
             ],
             "sugar_preset_ref": "std-1-2-5-10",
@@ -169,7 +169,7 @@
                 { "order": 2, "ref": "material_in_cup" },
                 { "order": 3, "ref": "soda_shake" }
             ],
-            "notes": ["檸檬原汁不用多加 +5"]
+            "notes": ["檸檬汁不用多加 +5"]
         }
     ]
 }

@@ -1,0 +1,143 @@
+{
+    "meta": {
+        "title": "果然好滋味",
+        "sugar_ref": "data/sugar.json",
+        "source_pdf": "果然好滋味1.pdf",
+        "note": [
+            "果肉要尖尖一滿匙，不可以平匙",
+            "加購加料量到【150ml】，料少量到【100ml】",
+            "【去冰】升1階分糖；【少冰加料】不升糖。",
+            "原汁要多【+5】（會殘留）。",
+            "加料 1分糖算法：不要太甜 / 3。",
+            "加購加料量到【150ml】，料少量到【100ml】，不用補到滿杯。"
+        ]
+    },
+    "shared_steps": {
+        "material_in_shaker": "白蔗糖、原汁入炫杯",
+        "tea_in_shaker": "加茶",
+        "fill_ice_600": "冰塊加到 600ml，炫。"
+    },
+    "categories": [
+        {
+            "id": "fruity-blackberry-honey",
+            "name": "桑椹蜜香紅",
+            "ingredients_base": [
+                { "label": "桑椹原汁", "amount": 80, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "text": "從炫杯倒一點紅茶，沖小量杯殘留桑葚。" },
+                { "order": 4, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-apple",
+            "name": "完熟頻果紅/綠茶",
+            "ingredients_base": [
+                { "label": "蘋果原汁", "amount": 70, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-crispy-plum",
+            "name": "脆梅果青/綠茶",
+            "ingredients_base": [
+                { "label": "梅汁", "amount": 40, "unit": "ml" },
+                { "label": "脆梅", "amount": 2, "unit": "顆" },
+                { "label": "話梅", "amount": 1, "unit": "顆" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "text": "脆梅、話梅先放紙杯。" },
+                { "order": 2, "ref": "tea_in_shaker" },
+                { "order": 3, "ref": "material_in_shaker" },
+                { "order": 4, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-honey-yuzu",
+            "name": "蜂蜜香柚青/綠/紅茶",
+            "ingredients_base": [
+                { "label": "檸檬汁", "amount": 5, "unit": "ml" },
+                { "label": "柚子醬", "amount": 125, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-pineapple-passionfruit",
+            "name": "百香 鳳梨 青/綠茶",
+            "ingredients_base": [
+                { "label": "檸檬汁", "amount": 10, "unit": "ml" },
+                { "label": "百香原汁", "amount": 20, "unit": "ml" },
+                { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-golden-pineapple",
+            "name": "金鑽 鳳梨 青/綠茶",
+            "ingredients_base": [
+                { "label": "檸檬汁", "amount": 5, "unit": "ml" },
+                { "label": "鳳梨果肉", "amount": 4, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-spring-bud-passionfruit",
+            "name": "春芽百香綠",
+            "ingredients_base": [
+                { "label": "百香汁", "amount": "50", "unit": "ml" },
+                { "label": "梅汁", "amount": "5", "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-fresh-lemon",
+            "name": "鮮檸檬 青/綠/紅茶",
+            "ingredients_base": [
+                { "label": "檸檬汁", "amount": 30, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-13-26-40-50",
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        }
+    ]
+}
