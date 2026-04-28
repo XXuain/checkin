@@ -404,6 +404,131 @@
                 { "order": 2, "ref": "fill_ice_water_600" }
             ],
             "notes": []
+        },
+        {
+            "id": "fruity-grape-pulp-juice",
+            "name": "葡萄果粒茶",
+            "ingredients_base": [
+                { "label": "葡萄汁", "amount": 60, "unit": "ml" },
+                { "label": "葡萄果肉", "amount": 1.5, "unit": "匙" }
+            ],
+            "sugar_amount": { "preset_ref": "std-5-10-15-20" },
+            "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "ref": "fill_ice_600" }
+            ],
+            "notes": ["不升糖"]
+        },
+        {
+            "id": "fruity-chia-lemon-tea",
+            "name": "麥香凍檸茶",
+            "ingredients_base": [
+                { "label": "檸檬汁", "amount": 20, "unit": "ml" },
+                { "label": "寒天晶球", "amount": 150, "unit": "ml" },
+                { "label": "麥茶", "amount": 500, "unit": "ml" }
+            ],
+            "sugar_amount": { "preset_ref": "std-13-26-40-50" },
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": ""
+            },
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "text": "炫" }
+            ],
+            "notes": ["不升糖"]
+        },
+        {
+            "id": "fruity-papaya-lemon-tea",
+            "name": "芭樂輕檸檬",
+            "ingredients_base": [
+                { "label": "芭樂汁", "amount": 180, "unit": "g" },
+                { "label": "檸檬汁", "amount": 20, "unit": "ml" },
+                { "label": "冰塊", "amount": 10, "unit": "顆" },
+                { "label": "冰水", "amount": 300, "unit": "ml" }
+            ],
+            "sugar_amount": { "preset_ref": "std-10-20-30-40" },
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+            "steps": [
+                { "order": 1, "text": "一杯巴樂倒進果汁機" },
+                { "order": 2, "text": "炫杯裝水、白糖、檸檬、冰塊，炫開" },
+                { "order": 3, "text": "倒入果汁機跟芭樂一起榨" },
+                { "order": 4, "text": "過濾網，把籽濾掉" }
+            ],
+            "notes": ["不升糖"]
+        },
+        {
+            "id": "fruity-grapefruit-green-tea",
+            "name": "葡萄柚青茶／綠",
+            "ingredients_base": [
+                { "label": "葡萄柚", "amount": 70, "unit": "ml" },
+                { "label": "葡萄柚果肉", "amount": 2, "unit": "匙" },
+                { "label": "話梅", "amount": 1, "unit": "顆" }
+            ],
+            "sugar_amount": { "preset_ref": "std-10-20-30-40" },
+            "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 550"
+            },
+            "steps": [
+                { "order": 1, "text": "話梅與葡萄柚果肉先放紙杯。" },
+                { "order": 2, "text": "茶、白糖、原汁、入炫杯。" },
+                { "order": 3, "text": "冰塊加到 550，炫。" }
+            ],
+            "notes": ["不升糖"]
+        },
+        {
+            "id": "fruity-grapefruit-passionfruit",
+            "name": "葡萄柚百香",
+            "ingredients_base": [
+                { "label": "葡萄柚汁", "amount": 60, "unit": "ml" },
+                { "label": "葡萄柚果肉", "amount": 2, "unit": "匙" },
+                { "label": "百香汁", "amount": 40, "unit": "ml" }
+            ],
+            "sugar_amount": { "preset_ref": "std-10-20-30-40" },
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+            "steps": [
+                { "order": 1, "text": "葡萄柚果肉先放紙杯。" },
+                { "order": 2, "text": "加入多多、白蔗糖與冰塊後搖勻。" },
+                { "order": 3, "text": "冰塊加到 550，炫。" }
+            ],
+            "notes": ["不升糖"]
+        },
+        {
+            "id": "fruity-grapefruit-yakult",
+            "name": "葡萄柚多多",
+            "ingredients_base": [
+                { "label": "葡萄柚汁", "amount": 60, "unit": "ml" },
+                { "label": "葡萄柚果肉", "amount": 2, "unit": "匙" },
+                { "label": "多多", "amount": 2, "unit": "瓶" }
+            ],
+            "sugar_amount": { "preset_ref": "std-5-10-15-20" },
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+            "steps": [
+                { "order": 1, "text": "葡萄柚果肉先放紙杯。" },
+                { "order": 2, "text": "加入多多、白蔗糖與冰塊後搖勻。" },
+                { "order": 3, "text": "冰塊加到 550，炫。" }
+            ],
+            "notes": ["不升糖"]
         }
     ]
 }

@@ -65,8 +65,11 @@ function getSugarPresetRef(cat) {
 }
 
 function getSugarAdjustmentRef(cat) {
+    if (cat?.sugar_amount) {
+        const ref = cat.sugar_amount.with_no_ice_and_material_ref
+        return typeof ref === 'string' && ref.trim().length ? ref : null
+    }
     return (
-        cat?.sugar_amount?.with_no_ice_and_material_ref ??
         cat?.sugar_amount?.with_no_ice_ref ??
         getSugarPresetRef(cat)
     )
