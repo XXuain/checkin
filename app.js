@@ -267,13 +267,17 @@ function collectPresetFilters(categories = []) {
 }
 
 function collectTeaFilters(categories = []) {
-    return Array.from(
+    const refs = Array.from(
         new Set(
             categories
                 .map((c) => c?.tea_with_ice_ref)
                 .filter((ref) => typeof ref === 'string' && ref.length),
         ),
     )
+    const hasNoTea = categories.some(
+        (c) => typeof c?.tea_with_ice_ref === 'string' && !c.tea_with_ice_ref.trim(),
+    )
+    return hasNoTea ? [...refs, '__no_tea__'] : refs
 }
 
 function parseIngredientFilterOptions(raw = '') {
@@ -416,6 +420,12 @@ async function main() {
             })
             const filtered = byIngredient.filter((c) => {
                 if (currentTeaFilter === 'all') return true
+                if (currentTeaFilter === '__no_tea__') {
+                    return (
+                        typeof c.tea_with_ice_ref === 'string' &&
+                        !c.tea_with_ice_ref.trim()
+                    )
+                }
                 return c.tea_with_ice_ref === currentTeaFilter
             })
             const html = filtered.map((c) =>
@@ -439,16 +449,15 @@ async function main() {
             const teaText =
                 currentTeaFilter === 'all'
                     ? '全部'
+                    : currentTeaFilter === '__no_tea__'
+                      ? '無茶'
                     : formatPresetLabel(currentTeaFilter)
-            const sugarText =
-                currentPresetFilter === 'all'
+            const sugarText = presetFilterOptions.length
+                ? currentPresetFilter === 'all'
                     ? '全部'
                     : formatPresetLabel(currentPresetFilter)
-            if (presetFilterOptions.length) {
-                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${sugarText} · 成分篩選 ${ingredientText} · 茶量篩選 ${teaText}`
-            } else {
-                subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 成分篩選 ${ingredientText} · 茶量篩選 ${teaText}`
-            }
+                : '無'
+            subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${sugarText} · 成分篩選 ${ingredientText} · 茶量篩選 ${teaText}`
         }
 
         if (
@@ -529,7 +538,11 @@ async function main() {
             teaFilterButtons.innerHTML = options
                 .map((option) => {
                     const label =
-                        option === 'all' ? '全部' : formatPresetLabel(option)
+                        option === 'all'
+                            ? '全部'
+                            : option === '__no_tea__'
+                              ? '無茶'
+                            : formatPresetLabel(option)
                     const pressed = option === currentTeaFilter
                     return `<button type="button" data-filter="${escapeHtml(option)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(label)}</button>`
                 })
