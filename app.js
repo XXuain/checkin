@@ -1,0 +1,192 @@
+async function loadJson(path) {
+    const res = await fetch(path)
+    if (!res.ok) throw new Error(`無法載入 ${path}（${res.status}）`)
+    return res.json()
+}
+
+function formatIngredient(row) {
+    if (row.amount != null && row.unit) {
+        return `${row.label} · ${row.amount}${row.unit}`
+    }
+    if (row.amount_display != null) {
+        const u = row.unit ? row.unit : ''
+        return `${row.label} · ${row.amount_display}${u}`
+    }
+    return row.label ?? ''
+}
+
+function resolveStep(step, shared) {
+    if (step.ref && shared && shared[step.ref]) {
+        return shared[step.ref]
+    }
+    return step.text ?? step.ref ?? ''
+}
+
+function normalizeNotes(metaNote) {
+    if (!metaNote) return []
+    return Array.isArray(metaNote) ? metaNote : [metaNote]
+}
+
+function buildTierRows(tiers, tierValues) {
+    if (!tierValues) return ''
+    return tiers
+        .slice()
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .map((t) => {
+            const val = tierValues[t.id]
+            return `<li><span class="tier">${escapeHtml(
+                t.label,
+            )}</span><span class="val">${escapeHtml(String(val ?? '—'))}</span></li>`
+        })
+        .join('')
+}
+
+function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all') {
+    const preset = sugarData?.sugar_presets?.[presetKey] ?? null
+    const tiers = sugarData?.sugar_tiers ?? []
+    if (!preset) {
+        return `<p class="section-label">糖分表</p><p>（找不到預設 <code>${escapeHtml(
+            presetKey,
+        )}</code>）</p>`
+    }
+
+    /** 方案：每個 preset 含 base／with_add_on；保留舊版「平面」格式的相容（僅數字鍵時視為標準糖分） */
+    let baseVals = preset.base ?? null
+    let addonVals = preset.with_add_on ?? null
+    const looksFlat =
+        !baseVals &&
+        (preset['1fen'] !== undefined ||
+            preset['golden'] !== undefined ||
+            preset['less_sweet'] !== undefined)
+    if (looksFlat) {
+        baseVals = preset
+        addonVals = null
+    }
+
+    const showBase = sugarFilter === 'all' || sugarFilter === 'base'
+    const showAddon = sugarFilter === 'all' || sugarFilter === 'addon'
+
+    const blocks = []
+    if (baseVals && showBase) {
+        blocks.push(`
+      <p class="section-label subsection">標準糖分</p>
+      <ul class="sugar-rows">${buildTierRows(tiers, baseVals)}</ul>
+    `)
+    }
+    if (addonVals && showAddon) {
+        blocks.push(`
+      <p class="section-label subsection" style="margin-top:0.85rem">加料減糖</p>
+      <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
+    `)
+    }
+
+    if (!blocks.length) {
+        const addonOnlyNoTable =
+            sugarFilter === 'addon' && addonVals == null && baseVals != null
+        const baseOnlyInvalid =
+            sugarFilter === 'base' && baseVals == null && addonVals != null
+        const msg = addonOnlyNoTable
+            ? '（此 preset 僅有標準糖分，無加料減糖對照表）'
+            : baseOnlyInvalid
+              ? '（無標準糖分欄位）'
+              : '（此預設缺少 base／with_add_on）'
+        return `<p class="section-label">糖分表</p><p>${escapeHtml(msg)}</p>`
+    }
+
+    return `
+    <div class="sugar-detail">
+      <p class="section-label">${escapeHtml(presetKey)}</p>
+      ${blocks.join('')}
+    </div>
+  `
+}
+
+function escapeHtml(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+}
+
+function renderCard(cat, sharedSteps, sugarData, sugarFilter = 'all') {
+    const ingredients = (cat.ingredients_base ?? [])
+        .map((row) => `<li>${escapeHtml(formatIngredient(row))}</li>`)
+        .join('')
+
+    const stepsSorted = (cat.steps ?? [])
+        .slice()
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    const stepsItems = stepsSorted
+        .map((s) => `<li>${escapeHtml(resolveStep(s, sharedSteps))}</li>`)
+        .join('')
+
+    const itemNotes = cat.notes?.length
+        ? `<div class="notes-block"><strong>備註</strong><ul>${cat.notes
+              .map((n) => `<li>${escapeHtml(n)}</li>`)
+              .join('')}</ul></div>`
+        : ''
+
+    const presetKey = cat.sugar_preset_ref ?? ''
+    const sugarBlock = sugarRowsHtml(sugarData, presetKey, sugarFilter)
+
+    return `
+    <li class="item-card" data-id="${escapeHtml(cat.id ?? '')}">
+      <div class="item-card__head">
+        <h2 class="item-card__name">${escapeHtml(cat.name ?? '')}</h2>
+        <div class="item-card__sugar">
+          糖分表 <code>${escapeHtml(presetKey)}</code>
+        </div>
+      </div>
+      <div class="item-card__body">
+        <p class="section-label">原汁／配料</p>
+        <ul class="ingredient-list">${ingredients}</ul>
+        ${sugarBlock}
+        <p class="section-label" style="margin-top:1rem">步驟</p>
+        <ol class="steps-list">${stepsItems}</ol>
+        ${itemNotes}
+      </div>
+    </li>
+  `
+}
+
+async function main() {
+    const titleEl = document.getElementById('page-title')
+    const subEl = document.getElementById('page-subtitle')
+    const grid = document.getElementById('item-grid')
+    const footer = document.getElementById('footer-notes')
+
+    try {
+        const [mojito, sugar] = await Promise.all([
+            loadJson('data/mojito-water.json'),
+            loadJson('data/sugar.json'),
+        ])
+
+        const sharedSteps = mojito.shared_steps ?? {}
+        titleEl.textContent = mojito.meta?.title ?? '品項一覽'
+        subEl.textContent = `${mojito.categories?.length ?? 0} 項飲品 · 對照 data 目錄`
+
+        const html = (mojito.categories ?? []).map((c) =>
+            renderCard(c, sharedSteps, sugar),
+        )
+        grid.innerHTML = html.join('')
+
+        const globalNotes = normalizeNotes(mojito.meta?.note)
+        if (globalNotes.length) {
+            footer.innerHTML = `<h2>共通備註</h2><ul>${globalNotes
+                .map((n) => `<li>${escapeHtml(n)}</li>`)
+                .join('')}</ul>`
+        } else {
+            footer.innerHTML = ''
+        }
+    } catch (e) {
+        titleEl.textContent = '無法載入資料'
+        subEl.textContent =
+            '請以本機伺服器開啟此資料夾（勿用 file:// 直接開檔案）。'
+        grid.innerHTML = `<li class="error-banner">${escapeHtml(
+            e instanceof Error ? e.message : String(e),
+        )}<br /><br />終端機執行：<code>cd checkin2.0 && python3 -m http.server 8765</code>，再開啟 <code>http://127.0.0.1:8765</code></li>`
+    }
+}
+
+main()

@@ -1,0 +1,163 @@
+{
+    "meta": {
+        "title": "鮮果氣泡飲",
+        "sugar_ref": "data/sugar.json",
+        "note": [
+            "果肉要尖尖一滿匙，不可以平匙",
+            "非現場等候的客人，等人到再打氣泡水跟冰塊，確保品質",
+            "加購加料量到【150ml】，料少量到【100ml】",
+            "加料 -5糖。因為料會佔據紙杯容量，氣泡水會減少，因此糖量也要減少不然會太甜不耐喝",
+            "加料一分糖分算法：(加料ml - 5) / 3",
+            "加料二分糖分算法：(加料ml - 5) / 3 x 2"
+        ]
+    },
+    "shared_steps": {
+        "ice_line": "紙杯加冰塊到會字，約16顆冰塊。",
+        "material_in_cup": "白蔗糖、原汁入紙杯",
+        "soda_shake": "加一半氣泡水，攪拌均勻。"
+    },
+    "categories": [
+        {
+            "id": "mojito-lemon",
+            "name": "檸檬摩奇多",
+            "ingredients_base": [
+                { "label": "檸檬原汁", "amount": 40, "unit": "ml" },
+                { "label": "薄荷葉", "amount_display": "5-6", "unit": "朵" },
+                { "label": "檸檬片", "amount": 1, "unit": "片" }
+            ],
+            "sugar_preset_ref": "std-13-26-40-50",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "text": "白蔗糖、原汁、薄荷葉入紙杯。" },
+                { "order": 3, "text": "加一半起泡水" },
+                { "order": 4, "text": "先戳薄荷葉，確認有小碎葉子，再攪拌均勻" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-citrus-grapefruit",
+            "name": "葡萄柚摩奇多",
+            "ingredients_base": [
+                { "label": "葡萄柚原汁", "amount": 70, "unit": "ml" },
+                { "label": "葡萄柚果肉", "amount": 2, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-citrus-honey",
+            "name": "蜂蜜柚子摩奇多",
+            "ingredients_base": [
+                { "label": "檸檬原汁", "amount": 10, "unit": "ml" },
+                { "label": "柚子醬", "amount": 125, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-pineapple",
+            "name": "鳳梨摩奇多",
+            "ingredients_base": [
+                { "label": "檸檬原汁", "amount": 20, "unit": "ml" },
+                { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-plum",
+            "name": "冷冽春梅摩奇多",
+            "ingredients_base": [
+                { "label": "梅汁", "amount": 40, "unit": "ml" },
+                { "label": "脆梅", "amount": 2, "unit": "顆" },
+                { "label": "話梅", "amount": 1, "unit": "顆" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-blackberry-lemon",
+            "name": "桑椹檸檬摩奇多",
+            "ingredients_base": [
+                { "label": "桑椹原汁", "amount": 80, "unit": "ml" },
+                { "label": "檸檬原汁", "amount": 20, "unit": "ml" },
+                { "label": "薄荷葉", "amount": 1, "unit": "朵" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" },
+                { "order": 4, "text": "薄荷葉做裝飾" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-grape",
+            "name": "巨峰葡萄摩奇多",
+            "ingredients_base": [
+                { "label": "葡萄原汁", "amount": 60, "unit": "ml" },
+                { "label": "葡萄果肉", "amount": 1.5, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-passionfruit",
+            "name": "百香冬露摩奇多",
+            "ingredients_base": [
+                { "label": "冬瓜", "amount": 100, "unit": "ml" },
+                { "label": "百香原汁", "amount": 40, "unit": "ml" },
+                { "label": "寒天晶球", "amount": 1, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-1-2-5-10",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "mojito-apple-pro",
+            "name": "蘋果西打pro",
+            "ingredients_base": [
+                { "label": "蘋果原汁", "amount": 70, "unit": "ml" },
+                { "label": "檸檬原汁", "amount": 5, "unit": "ml" },
+                { "label": "奇芽子", "amount": 2, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-1-2-5-10",
+            "steps": [
+                { "order": 1, "ref": "ice_line" },
+                { "order": 2, "ref": "material_in_cup" },
+                { "order": 3, "ref": "soda_shake" }
+            ],
+            "notes": ["檸檬原汁不用多加 +5"]
+        }
+    ]
+}
