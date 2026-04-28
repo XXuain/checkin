@@ -15,7 +15,8 @@
     "shared_steps": {
         "material_in_shaker": "白蔗糖、原汁入炫杯",
         "tea_in_shaker": "加茶",
-        "fill_ice_600": "冰塊加到 600ml，炫。"
+        "fill_ice_600": "[冰塊]加到 600ml，炫。",
+        "fill_ice_water_600": "[冰水]加到 600ml，炫。"
     },
     "sugar_with_no_ice": {
         "std-1-2-5-10": "add-2-5-10-10",
@@ -196,6 +197,163 @@
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
                 { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-orange-green",
+            "name": "鮮柳橙青／綠",
+            "ingredients_base": [
+                { "label": "柳橙原汁", "amount": 150, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "std-400-400-450-450",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ]
+        },
+        {
+            "id": "fruity-orange-lemon-green",
+            "name": "鮮橙檸檬青／綠",
+            "ingredients_base": [
+                { "label": "柳橙原汁", "amount": 150, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 20, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "std-400-400-450-450",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
+            "steps": [
+                { "order": 1, "ref": "tea_in_shaker" },
+                { "order": 2, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ],
+            "notes": ["去冰檸檬汁要加 25"]
+        },
+        {
+            "id": "fruity-green-tea-yakult",
+            "name": "綠茶／青茶多多",
+            "ingredients_base": [
+                { "label": "多多", "amount": 2, "unit": "瓶" }
+            ],
+            "sugar_preset_ref": "std-1-2-5-10",
+            "tea_with_ice_ref": "std-400-400-450-450",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
+            "steps": [
+                { "order": 1, "text": "加茶、多多、白蔗糖到炫杯。" },
+                { "order": 3, "ref": "fill_ice_600" }
+            ]
+        },
+        {
+            "id": "fruity-apple-yakult",
+            "name": "蘋果多多",
+            "ingredients_base": [
+                { "label": "蘋果汁", "amount": 60, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 5, "unit": "ml" },
+                { "label": "多多", "amount": 2, "unit": "瓶" }
+            ],
+            "sugar_preset_ref": "std-1-2-5-10",
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 3, "ref": "fill_ice_water_600" }
+            ],
+            "notes": ["檸檬汁不用多 +5"]
+        },
+        {
+            "id": "fruity-passionfruit-lemon-yakult",
+            "name": "百香／檸檬多多",
+            "ingredients_base": [
+                { "label": "百香汁", "amount": 30, "unit": "ml" },
+                { "label": "檸檬汁", "amount": 30, "unit": "ml" },
+                { "label": "多多", "amount": 2, "unit": "瓶" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "ref": "fill_ice_water_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-seasonal-fruit-ice-tea",
+            "name": "四季鮮果冰茶",
+            "ingredients_base": [
+                { "label": "柳橙汁", "amount": 100, "unit": "ml" },
+                { "label": "梅汁", "amount": 20, "unit": "ml" },
+                { "label": "百香汁", "amount": 20, "unit": "ml" },
+                { "label": "鳳梨果肉", "amount": 2, "unit": "匙" }
+            ],
+            "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "ref": "fill_ice_water_600" }
+            ],
+            "notes": []
+        },
+        {
+            "id": "fruity-light-passionfruit",
+            "name": "輕盈百香",
+            "ingredients_base": [
+                { "label": "百香汁", "amount": 40, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "ref": "fill_ice_water_600" }
+            ],
+            "notes": ["去冰百香果 50"]
+        },
+        {
+            "id": "fruity-orange-passionfruit-ice-tea",
+            "name": "鮮橙百香冰茶",
+            "ingredients_base": [
+                { "label": "柳橙汁", "amount": 150, "unit": "ml" },
+                { "label": "百香汁", "amount": 30, "unit": "ml" }
+            ],
+            "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "",
+            "ice_amount": {
+                "preset_ref": "std-4-8-12-16",
+                "text": ""
+            },
+            "steps": [
+                { "order": 1, "ref": "material_in_shaker" },
+                { "order": 2, "ref": "fill_ice_water_600" }
             ],
             "notes": []
         }
