@@ -17,11 +17,25 @@
         "tea_in_shaker": "加茶",
         "fill_ice_600": "冰塊加到 600ml，炫。"
     },
-    "sugar_with_ice": {
-        "std-1-2-5-10": "add-0-0-0-5",
-        "std-5-10-15-20": "add-3-6-10-15",
-        "std-10-20-30-40": "add-8-16-25-35",
-        "std-13-26-40-50": "add-11-23-35-45"
+    "sugar_with_no_ice": {
+        "std-1-2-5-10": "add-2-5-10-10",
+        "std-5-10-15-20": "add-10-15-20-20",
+        "std-10-20-30-40": "add-20-30-40-40",
+        "std-13-26-40-50": "add-26-40-50-50"
+    },
+    "tea_with_ice_presets": {
+        "std-250-250-300-300": {
+            "regular_ice": 250,
+            "less_ice": 250,
+            "light_ice": 300,
+            "no_ice": 300
+        },
+        "std-400-400-450-450": {
+            "regular_ice": 400,
+            "less_ice": 400,
+            "light_ice": 450,
+            "no_ice": 450
+        }
     },
     "categories": [
         {
@@ -31,6 +45,7 @@
                 { "label": "桑椹原汁", "amount": 80, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -46,6 +61,7 @@
                 { "label": "蘋果原汁", "amount": 70, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -62,6 +78,7 @@
                 { "label": "話梅", "amount": 1, "unit": "顆" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "text": "脆梅、話梅先放紙杯。" },
                 { "order": 2, "ref": "tea_in_shaker" },
@@ -78,6 +95,7 @@
                 { "label": "柚子醬", "amount": 125, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -94,6 +112,7 @@
                 { "label": "鳳梨果肉", "amount": 3, "unit": "匙" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -109,6 +128,7 @@
                 { "label": "鳳梨果肉", "amount": 4, "unit": "匙" }
             ],
             "sugar_preset_ref": "std-5-10-15-20",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -124,6 +144,7 @@
                 { "label": "梅汁", "amount": "5", "unit": "ml" }
             ],
             "sugar_preset_ref": "std-10-20-30-40",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -138,6 +159,7 @@
                 { "label": "檸檬汁", "amount": 30, "unit": "ml" }
             ],
             "sugar_preset_ref": "std-13-26-40-50",
+            "tea_with_ice_ref": "std-250-250-300-300",
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },

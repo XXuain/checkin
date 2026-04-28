@@ -1,0 +1,8 @@
+{
+    "ice_tiers": [
+        { "id": "regular_ice", "label": "正常", "order": 1 },
+        { "id": "less_ice", "label": "少冰", "order": 2 },
+        { "id": "light_ice", "label": "微冰", "order": 3 },
+        { "id": "no_ice", "label": "去冰", "order": 4 }
+    ]
+}

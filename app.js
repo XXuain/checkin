@@ -60,11 +60,39 @@ function parseAddOnPreset(addOnPreset, tiers) {
     return parsed
 }
 
+function teaRowsHtml(cat, teaPresets = {}, iceTiers = []) {
+    const teaPresetRef = cat?.tea_with_ice_ref
+    if (!teaPresetRef) return ''
+    const teaPreset = teaPresets?.[teaPresetRef]
+    if (!teaPreset) return ''
+
+    const sortedIceTiers = (iceTiers ?? [])
+        .slice()
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+
+    if (!sortedIceTiers.length) return ''
+
+    const rows = sortedIceTiers
+        .map((tier) => {
+            const amount = teaPreset?.[tier.id]
+            return `<li><span class="tier">${escapeHtml(tier.label ?? tier.id ?? '')}</span><span class="val">${escapeHtml(String(amount ?? '—'))}</span></li>`
+        })
+        .join('')
+
+    return `
+    <div class="tea-detail">
+      <p class="section-label">茶量（依冰量）</p>
+      <ul class="tea-rows">${rows}</ul>
+    </div>
+  `
+}
+
 function sugarRowsHtml(
     sugarData,
     presetKey,
     sugarFilter = 'all',
     sugarAddOnMap = {},
+    sugarAdjustmentLabel = '加料減糖',
 ) {
     const preset = sugarData?.sugar_presets?.[presetKey] ?? null
     const tiers = sugarData?.sugar_tiers ?? []
@@ -109,7 +137,7 @@ function sugarRowsHtml(
     if (addonVals && showAddon) {
         blocks.push(`
       <section class="sugar-pane">
-        <p class="section-label subsection">加料減糖</p>
+        <p class="section-label subsection">${escapeHtml(sugarAdjustmentLabel)}</p>
         <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
       </section>
     `)
@@ -174,6 +202,9 @@ function renderCard(
     sugarData,
     sugarFilter = 'all',
     sugarAddOnMap = {},
+    sugarAdjustmentLabel = '加料減糖',
+    teaPresets = {},
+    iceTiers = [],
 ) {
     const ingredients = (cat.ingredients_base ?? [])
         .map((row) => `<li>${escapeHtml(formatIngredient(row))}</li>`)
@@ -198,7 +229,9 @@ function renderCard(
         presetKey,
         sugarFilter,
         sugarAddOnMap,
+        sugarAdjustmentLabel,
     )
+    const teaBlock = teaRowsHtml(cat, teaPresets, iceTiers)
 
     return `
     <li class="item-card" data-id="${escapeHtml(cat.id ?? '')}">
@@ -208,6 +241,7 @@ function renderCard(
       <div class="item-card__body">
         <p class="section-label">原汁／配料</p>
         <ul class="ingredient-list">${ingredients}</ul>
+        ${teaBlock}
         ${sugarBlock}
         <p class="section-label" style="margin-top:1rem">步驟</p>
         <ol class="steps-list">${stepsItems}</ol>
@@ -221,6 +255,11 @@ async function main() {
     const pageConfig = document.body?.dataset ?? {}
     const menuDataPath = pageConfig.menuDataPath || 'data/mojito.json'
     const sugarDataPath = pageConfig.sugarDataPath || 'data/sugar.json'
+    const iceDataPath = pageConfig.iceDataPath || ''
+    const sugarAdjustmentMapKey =
+        pageConfig.sugarAdjustmentMapKey || 'sugar_with_add_on'
+    const sugarAdjustmentLabel =
+        pageConfig.sugarAdjustmentLabel || '加料減糖'
     const titleEl = document.getElementById('page-title')
     const subEl = document.getElementById('page-subtitle')
     const grid = document.getElementById('item-grid')
@@ -231,13 +270,17 @@ async function main() {
     )
 
     try {
-        const [menuData, sugar] = await Promise.all([
+        const [menuData, sugar, iceData] = await Promise.all([
             loadJson(menuDataPath),
             loadJson(sugarDataPath),
+            iceDataPath ? loadJson(iceDataPath) : Promise.resolve(null),
         ])
 
         const sharedSteps = menuData.shared_steps ?? {}
-        const sugarAddOnMap = menuData.sugar_with_add_on ?? {}
+        const sugarAddOnMap =
+            menuData[sugarAdjustmentMapKey] ?? menuData.sugar_with_add_on ?? {}
+        const teaPresets = menuData.tea_with_ice_presets ?? {}
+        const iceTiers = iceData?.ice_tiers ?? []
         const categories = menuData.categories ?? []
         const presetFilterOptions = collectPresetFilters(categories)
         let currentPresetFilter =
@@ -249,7 +292,16 @@ async function main() {
                 ? categories.filter((c) => c.sugar_preset_ref === currentPresetFilter)
                 : categories
             const html = filtered.map((c) =>
-                renderCard(c, sharedSteps, sugar, 'all', sugarAddOnMap),
+                renderCard(
+                    c,
+                    sharedSteps,
+                    sugar,
+                    'all',
+                    sugarAddOnMap,
+                    sugarAdjustmentLabel,
+                    teaPresets,
+                    iceTiers,
+                ),
             )
             grid.innerHTML = html.join('')
             if (currentPresetFilter) {
