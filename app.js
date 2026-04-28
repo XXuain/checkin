@@ -82,7 +82,50 @@ function teaRowsHtml(cat, teaPresets = {}, iceTiers = []) {
     return `
     <div class="tea-detail">
       <p class="section-label">茶量（依冰量）</p>
-      <ul class="tea-rows">${rows}</ul>
+      <div class="tea-pane-card">
+        <ul class="tea-rows">${rows}</ul>
+      </div>
+    </div>
+  `
+}
+
+function iceAmountHtml(cat, icePresets = {}, iceTiers = []) {
+    const iceAmount = cat?.ice_amount
+    if (!iceAmount) return ''
+
+    const presetRef = (iceAmount.preset_ref ?? '').trim()
+    if (presetRef) {
+        const preset = icePresets?.[presetRef]
+        if (!preset) return ''
+
+        const sortedIceTiers = (iceTiers ?? [])
+            .slice()
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+
+        if (!sortedIceTiers.length) return ''
+
+        const rows = sortedIceTiers
+            .map((tier) => {
+                const amount = preset?.[tier.id]
+                return `<li><span class="tier">${escapeHtml(tier.label ?? tier.id ?? '')}</span><span class="val">${escapeHtml(String(amount ?? '—'))}</span></li>`
+            })
+            .join('')
+
+        return `
+    <div class="ice-detail">
+      <p class="section-label">冰量</p>
+      <ul class="ice-rows">${rows}</ul>
+    </div>
+  `
+    }
+
+    const text = (iceAmount.text ?? '').trim()
+    if (!text) return ''
+
+    return `
+    <div class="ice-detail">
+      <p class="section-label">冰量</p>
+      <p class="ice-text">${escapeHtml(text)}</p>
     </div>
   `
 }
@@ -130,7 +173,9 @@ function sugarRowsHtml(
         blocks.push(`
       <section class="sugar-pane">
         <p class="section-label subsection">標準糖分</p>
-        <ul class="sugar-rows">${buildTierRows(tiers, baseVals)}</ul>
+        <div class="sugar-pane-card">
+          <ul class="sugar-rows">${buildTierRows(tiers, baseVals)}</ul>
+        </div>
       </section>
     `)
     }
@@ -138,7 +183,9 @@ function sugarRowsHtml(
         blocks.push(`
       <section class="sugar-pane">
         <p class="section-label subsection">${escapeHtml(sugarAdjustmentLabel)}</p>
-        <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
+        <div class="sugar-pane-card">
+          <ul class="sugar-rows">${buildTierRows(tiers, addonVals)}</ul>
+        </div>
       </section>
     `)
     }
@@ -158,7 +205,7 @@ function sugarRowsHtml(
 
     return `
     <div class="sugar-detail">
-      <p class="section-label">${escapeHtml(presetKey)}</p>
+      <p class="section-label subsection">白蔗糖量</p>
       <div class="sugar-pane-grid">${blocks.join('')}</div>
     </div>
   `
@@ -184,7 +231,9 @@ function collectPresetFilters(categories = []) {
         new Set(
             categories
                 .map((c) => c?.sugar_preset_ref)
-                .filter((preset) => typeof preset === 'string' && preset.length),
+                .filter(
+                    (preset) => typeof preset === 'string' && preset.length,
+                ),
         ),
     )
     const orderedKnown = SUGAR_PRESET_FILTER_OPTIONS.filter((preset) =>
@@ -205,6 +254,7 @@ function renderCard(
     sugarAdjustmentLabel = '加料減糖',
     teaPresets = {},
     iceTiers = [],
+    icePresets = {},
 ) {
     const ingredients = (cat.ingredients_base ?? [])
         .map((row) => `<li>${escapeHtml(formatIngredient(row))}</li>`)
@@ -232,6 +282,7 @@ function renderCard(
         sugarAdjustmentLabel,
     )
     const teaBlock = teaRowsHtml(cat, teaPresets, iceTiers)
+    const iceBlock = iceAmountHtml(cat, icePresets, iceTiers)
 
     return `
     <li class="item-card" data-id="${escapeHtml(cat.id ?? '')}">
@@ -242,6 +293,7 @@ function renderCard(
         <p class="section-label">原汁／配料</p>
         <ul class="ingredient-list">${ingredients}</ul>
         ${teaBlock}
+        ${iceBlock}
         ${sugarBlock}
         <p class="section-label" style="margin-top:1rem">步驟</p>
         <ol class="steps-list">${stepsItems}</ol>
@@ -258,8 +310,7 @@ async function main() {
     const iceDataPath = pageConfig.iceDataPath || ''
     const sugarAdjustmentMapKey =
         pageConfig.sugarAdjustmentMapKey || 'sugar_with_add_on'
-    const sugarAdjustmentLabel =
-        pageConfig.sugarAdjustmentLabel || '加料減糖'
+    const sugarAdjustmentLabel = pageConfig.sugarAdjustmentLabel || '加料減糖'
     const titleEl = document.getElementById('page-title')
     const subEl = document.getElementById('page-subtitle')
     const grid = document.getElementById('item-grid')
@@ -281,6 +332,7 @@ async function main() {
             menuData[sugarAdjustmentMapKey] ?? menuData.sugar_with_add_on ?? {}
         const teaPresets = menuData.tea_with_ice_presets ?? {}
         const iceTiers = iceData?.ice_tiers ?? []
+        const icePresets = iceData?.ice_presets ?? {}
         const categories = menuData.categories ?? []
         const presetFilterOptions = collectPresetFilters(categories)
         let currentPresetFilter =
@@ -289,7 +341,9 @@ async function main() {
         titleEl.textContent = menuData.meta?.title ?? '品項一覽'
         function renderList() {
             const filtered = currentPresetFilter
-                ? categories.filter((c) => c.sugar_preset_ref === currentPresetFilter)
+                ? categories.filter(
+                      (c) => c.sugar_preset_ref === currentPresetFilter,
+                  )
                 : categories
             const html = filtered.map((c) =>
                 renderCard(
@@ -301,6 +355,7 @@ async function main() {
                     sugarAdjustmentLabel,
                     teaPresets,
                     iceTiers,
+                    icePresets,
                 ),
             )
             grid.innerHTML = html.join('')
@@ -311,24 +366,24 @@ async function main() {
             }
         }
 
-        if (sugarFilterWrap && sugarFilterButtons && presetFilterOptions.length) {
+        if (
+            sugarFilterWrap &&
+            sugarFilterButtons &&
+            presetFilterOptions.length
+        ) {
             sugarFilterWrap.hidden = false
-            sugarFilterButtons.innerHTML = presetFilterOptions.map(
-                (preset) => {
+            sugarFilterButtons.innerHTML = presetFilterOptions
+                .map((preset) => {
                     const pressed = preset === currentPresetFilter
                     return `<button type="button" data-filter="${escapeHtml(preset)}" aria-pressed="${pressed ? 'true' : 'false'}" class="${pressed ? 'is-active' : ''}">${escapeHtml(preset)}</button>`
-                },
-            ).join('')
+                })
+                .join('')
 
             sugarFilterButtons.addEventListener('click', (event) => {
                 const target = event.target
                 if (!(target instanceof HTMLButtonElement)) return
                 const selected = target.dataset.filter
-                if (
-                    !selected ||
-                    !presetFilterOptions.includes(selected)
-                )
-                    return
+                if (!selected || !presetFilterOptions.includes(selected)) return
                 currentPresetFilter = selected
 
                 for (const btn of sugarFilterButtons.querySelectorAll(

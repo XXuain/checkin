@@ -46,6 +46,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -62,6 +66,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -79,6 +87,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "text": "脆梅、話梅先放紙杯。" },
                 { "order": 2, "ref": "tea_in_shaker" },
@@ -96,6 +108,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -113,6 +129,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -129,6 +149,10 @@
             ],
             "sugar_preset_ref": "std-5-10-15-20",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -145,6 +169,10 @@
             ],
             "sugar_preset_ref": "std-10-20-30-40",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },
@@ -160,6 +188,10 @@
             ],
             "sugar_preset_ref": "std-13-26-40-50",
             "tea_with_ice_ref": "std-250-250-300-300",
+            "ice_amount": {
+                "preset_ref": "",
+                "text": "冰塊加到 600"
+            },
             "steps": [
                 { "order": 1, "ref": "tea_in_shaker" },
                 { "order": 2, "ref": "material_in_shaker" },

@@ -4,5 +4,13 @@
         { "id": "less_ice", "label": "少冰", "order": 2 },
         { "id": "light_ice", "label": "微冰", "order": 3 },
         { "id": "no_ice", "label": "去冰", "order": 4 }
-    ]
+    ],
+    "ice_presets": {
+        "std-4-8-12-16": {
+            "regular_ice": "16-18",
+            "less_ice": "12-14",
+            "light_ice": "8-10",
+            "no_ice": "4"
+        }
+    }
 }
