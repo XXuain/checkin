@@ -41,7 +41,26 @@ function buildTierRows(tiers, tierValues) {
         .join('')
 }
 
-function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all') {
+function parseAddOnPreset(addOnPreset, tiers) {
+    if (!addOnPreset || typeof addOnPreset !== 'string') return null
+    const match = /^add-(.+)$/.exec(addOnPreset.trim())
+    if (!match) return null
+    const nums = match[1].split('-').map((n) => Number(n))
+    if (!nums.length || nums.some((n) => Number.isNaN(n))) return null
+
+    const sortedTiers = tiers
+        .slice()
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    if (nums.length !== sortedTiers.length) return null
+
+    const parsed = {}
+    for (let i = 0; i < sortedTiers.length; i += 1) {
+        parsed[sortedTiers[i].id] = nums[i]
+    }
+    return parsed
+}
+
+function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all', sugarAddOnMap = {}) {
     const preset = sugarData?.sugar_presets?.[presetKey] ?? null
     const tiers = sugarData?.sugar_tiers ?? []
     if (!preset) {
@@ -50,7 +69,11 @@ function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all') {
         )}</code>）</p>`
     }
 
-    /** 方案：每個 preset 含 base／with_add_on；保留舊版「平面」格式的相容（僅數字鍵時視為標準糖分） */
+    /** 相容：
+     * 1) 新版：preset 為平面數值，add-on 在 mojito.sugar_with_add_on 以 add-x-x-x-x 表示
+     * 2) 舊版：preset 含 base/with_add_on
+     * 3) 更舊：preset 只有平面數值（僅標準糖分）
+     */
     let baseVals = preset.base ?? null
     let addonVals = preset.with_add_on ?? null
     const looksFlat =
@@ -61,6 +84,9 @@ function sugarRowsHtml(sugarData, presetKey, sugarFilter = 'all') {
     if (looksFlat) {
         baseVals = preset
         addonVals = null
+    }
+    if (!addonVals) {
+        addonVals = parseAddOnPreset(sugarAddOnMap?.[presetKey], tiers)
     }
 
     const showBase = sugarFilter === 'all' || sugarFilter === 'base'
@@ -116,7 +142,13 @@ const SUGAR_PRESET_FILTER_OPTIONS = [
     'std-13-26-40-50',
 ]
 
-function renderCard(cat, sharedSteps, sugarData, sugarFilter = 'all') {
+function renderCard(
+    cat,
+    sharedSteps,
+    sugarData,
+    sugarFilter = 'all',
+    sugarAddOnMap = {},
+) {
     const ingredients = (cat.ingredients_base ?? [])
         .map((row) => `<li>${escapeHtml(formatIngredient(row))}</li>`)
         .join('')
@@ -135,7 +167,12 @@ function renderCard(cat, sharedSteps, sugarData, sugarFilter = 'all') {
         : ''
 
     const presetKey = cat.sugar_preset_ref ?? ''
-    const sugarBlock = sugarRowsHtml(sugarData, presetKey, sugarFilter)
+    const sugarBlock = sugarRowsHtml(
+        sugarData,
+        presetKey,
+        sugarFilter,
+        sugarAddOnMap,
+    )
 
     return `
     <li class="item-card" data-id="${escapeHtml(cat.id ?? '')}">
@@ -175,6 +212,7 @@ async function main() {
 
         let currentPresetFilter = SUGAR_PRESET_FILTER_OPTIONS[0]
         const sharedSteps = mojito.shared_steps ?? {}
+        const sugarAddOnMap = mojito.sugar_with_add_on ?? {}
         const categories = mojito.categories ?? []
         const totalCount = categories.length
         titleEl.textContent = mojito.meta?.title ?? '品項一覽'
@@ -182,7 +220,9 @@ async function main() {
             const filtered = categories.filter(
                 (c) => c.sugar_preset_ref === currentPresetFilter,
             )
-            const html = filtered.map((c) => renderCard(c, sharedSteps, sugar))
+            const html = filtered.map((c) =>
+                renderCard(c, sharedSteps, sugar, 'all', sugarAddOnMap),
+            )
             grid.innerHTML = html.join('')
             subEl.textContent = `${filtered.length} / ${totalCount} 項飲品 · 糖分篩選 ${currentPresetFilter}`
         }

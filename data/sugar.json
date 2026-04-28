@@ -1,72 +1,34 @@
 {
-  "sugar_tiers": [
-    { "id": "1fen", "label": "1分糖", "order": 1 },
-    { "id": "2fen", "label": "2分糖", "order": 2 },
-    { "id": "less_sweet", "label": "不要太甜", "order": 3 },
-    { "id": "golden", "label": "黃金比例", "order": 4 }
-  ],
-  "sugar_calculation": {
-    "1fen": "(less_sweet - 5) / 3",
-    "2fen": "((less_sweet - 5) / 3) x 2",
-    "less_sweet": "less_sweet - 5",
-    "golden": "golden - 5"
-  },
-  "sugar_presets": {
-    "std-1-2-5-10": {
-      "base": {
-        "1fen": 1,
-        "2fen": 2,
-        "less_sweet": 5,
-        "golden": 10
-      },
-      "with_add_on": {
-        "1fen": 0,
-        "2fen": 0,
-        "less_sweet": 0,
-        "golden": 5
-      }
-    },
-    "std-5-10-15-20": {
-      "base": {
-        "1fen": 5,
-        "2fen": 10,
-        "less_sweet": 15,
-        "golden": 20
-      },
-      "with_add_on": {
-        "1fen": 3,
-        "2fen": 6,
-        "less_sweet": 10,
-        "golden": 15
-      }
-    },
-    "std-10-20-30-40": {
-      "base": {
-        "1fen": 10,
-        "2fen": 20,
-        "less_sweet": 30,
-        "golden": 40
-      },
-      "with_add_on": {
-        "1fen": 8,
-        "2fen": 16,
-        "less_sweet": 25,
-        "golden": 35
-      }
-    },
-    "std-13-26-40-50": {
-      "base": {
-        "1fen": 13,
-        "2fen": 26,
-        "less_sweet": 40,
-        "golden": 50
-      },
-      "with_add_on": {
-        "1fen": 11,
-        "2fen": 23,
-        "less_sweet": 35,
-        "golden": 45
-      }
+    "sugar_tiers": [
+        { "id": "1fen", "label": "1分糖", "order": 1 },
+        { "id": "2fen", "label": "2分糖", "order": 2 },
+        { "id": "less_sweet", "label": "不要太甜", "order": 3 },
+        { "id": "golden", "label": "黃金比例", "order": 4 }
+    ],
+    "sugar_presets": {
+        "std-1-2-5-10": {
+            "1fen": 1,
+            "2fen": 2,
+            "less_sweet": 5,
+            "golden": 10
+        },
+        "std-5-10-15-20": {
+            "1fen": 5,
+            "2fen": 10,
+            "less_sweet": 15,
+            "golden": 20
+        },
+        "std-10-20-30-40": {
+            "1fen": 10,
+            "2fen": 20,
+            "less_sweet": 30,
+            "golden": 40
+        },
+        "std-13-26-40-50": {
+            "1fen": 13,
+            "2fen": 26,
+            "less_sweet": 40,
+            "golden": 50
+        }
     }
-  }
 }
