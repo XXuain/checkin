@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>流程圖 Demo · Mermaid</title>
+        <link rel="stylesheet" href="../styles.css" />
+        <style>
+            .demo-wrap {
+                max-width: 52rem;
+                margin: 0 auto;
+            }
+            .mermaid-scroll-hint {
+                display: none;
+                margin: 0 0 0.65rem;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.88rem;
+                font-weight: 600;
+                text-align: center;
+                color: var(--accent);
+                background: var(--accent-soft);
+                border-radius: 999px;
+                border: 1px solid rgba(22, 101, 52, 0.25);
+            }
+            .demo-note {
+                margin: 0 0 1rem;
+                padding: 0.85rem 1rem;
+                font-size: 0.92rem;
+                color: var(--muted);
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                line-height: 1.6;
+            }
+            .demo-note h2 {
+                margin: 0 0 0.5rem;
+                font-size: 1rem;
+                color: var(--text);
+            }
+            .demo-note ul {
+                margin: 0.4rem 0 0;
+                padding-left: 1.2rem;
+            }
+            .demo-note code {
+                font-size: 0.84em;
+                padding: 0.12em 0.35em;
+                border-radius: 4px;
+                background: #f5f5f4;
+            }
+            .mermaid-host {
+                margin: 1.25rem 0;
+                padding: 1.25rem;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                touch-action: pan-x pan-y;
+            }
+            .mermaid-host .mermaid {
+                display: flex;
+                justify-content: center;
+                min-width: min-content;
+            }
+            .mermaid-host .mermaid svg {
+                max-height: min(85vh, 1200px);
+            }
+            @media (max-width: 640px) {
+                .mermaid-scroll-hint {
+                    display: block;
+                }
+                .mermaid-host--bleed {
+                    margin-left: -1.25rem;
+                    margin-right: -1.25rem;
+                    width: calc(100% + 2.5rem);
+                    max-width: 100vw;
+                    padding: 0.85rem 0.75rem 1rem;
+                    border-left: none;
+                    border-right: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                }
+                .mermaid-host--bleed .mermaid {
+                    justify-content: flex-start;
+                }
+            }
+            .source-block {
+                margin-top: 1.5rem;
+            }
+            .source-block pre {
+                margin: 0.5rem 0 0;
+                padding: 1rem;
+                font-size: 0.78rem;
+                line-height: 1.45;
+                overflow-x: auto;
+                background: #1c1917;
+                color: #e7e5e4;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page demo-wrap">
+            <header class="header">
+                <p class="subtitle" style="margin-bottom: 0.5rem">
+                    <a href="../index.html">← 返回首頁</a>
+                </p>
+                <h1 class="title">流程圖 Demo（README 同款）</h1>
+                <p class="subtitle">
+                    使用 <strong>Mermaid</strong> 在瀏覽器繪製，語法與 README 的
+                    <code>graph TD</code> 區塊相同。
+                </p>
+            </header>
+
+            <article class="demo-note">
+                <h2>為什麼用 Mermaid？</h2>
+                <ul>
+                    <li>
+                        與文件同源：圖用文字描述，可版本控制、Review 時 diff 清楚。
+                    </li>
+                    <li>
+                        支援菱形決策 <code>{ }</code>、合流
+                        <code>A &amp; B --&gt; C</code> 等常見流程圖。
+                    </li>
+                    <li>
+                        替代方案：要<strong>可拖曳節點、甘特圖級互動</strong>可評估
+                        <code>@xyflow/react</code>（React Flow）、AntV
+                        <code>G6</code>；單純「規格圖＋文件」Mermaid 通常最省事。
+                    </li>
+                </ul>
+            </article>
+
+            <p class="mermaid-scroll-hint">← 左右滑動查看完整流程圖 →</p>
+            <div class="mermaid-host mermaid-host--bleed">
+                <div class="mermaid">
+graph TD
+    A["進入品項: 例如 巧克力歐蕾"] --> B{"選擇規格"}
+    B --> C["冰/熱選擇"]
+    B --> D["加料/不加料"]
+
+    C --> C1["冰: 顯示冰塊顆數與冷飲流程"]
+    C --> C2["熱: 顯示加熱步驟與熱水比例"]
+
+    D --> D1["一般: 顯示標準奶量 300/350/400"]
+    D --> D2["加料: 自動換算減量後的奶量 200/250/300"]
+
+    C1 & C2 & D1 & D2 --> E["最終作業步驟清單"]
+                </div>
+            </div>
+
+            <div class="source-block">
+                <p class="section-label">對應原始碼（與 README 一致）</p>
+                <pre><code>graph TD
+A[進入品項: 例如 巧克力歐蕾] --> B{選擇規格}
+B --> C[冰/熱選擇]
+B --> D[加料/不加料]
+
+    C --> C1[冰: 顯示冰塊顆數與冷飲流程]
+    C --> C2[熱: 顯示加熱步驟與熱水比例]
+
+    D --> D1[一般: 顯示標準奶量 300/350/400]
+    D --> D2[加料: 自動換算減量後的奶量 200/250/300]
+
+    C1 & C2 & D1 & D2 --> E[最終作業步驟清單]</code></pre>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+        <script>
+            ;(async function () {
+                const narrow = window.matchMedia("(max-width: 640px)").matches
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: "base",
+                    securityLevel: "loose",
+                    themeVariables: {
+                        primaryColor: "#dcfce7",
+                        primaryTextColor: "#166534",
+                        primaryBorderColor: "#166534",
+                        lineColor: "#78716c",
+                        secondaryColor: "#fffefb",
+                        tertiaryColor: "#f6f3ed",
+                        fontSize: narrow ? "17px" : "15px",
+                        fontFamily:
+                            '"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif',
+                    },
+                    flowchart: {
+                        curve: "basis",
+                        htmlLabels: true,
+                        padding: narrow ? 10 : 16,
+                        // 手機：保持圖實際寬度＋橫向捲動，字才看得清
+                        useMaxWidth: !narrow,
+                    },
+                })
+                await mermaid.run({ querySelector: ".mermaid" })
+            })()
+        </script>
+    </body>
+</html>

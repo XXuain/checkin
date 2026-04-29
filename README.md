@@ -30,14 +30,28 @@ npx --yes serve .
 
 ## 檔案說明
 
-| 路徑                     | 說明                                                                           |
-| ------------------------ | ------------------------------------------------------------------------------ |
-| `index.html`             | 入口頁                                                                         |
-| `pages/*.html`           | 分類品項頁（例如 `pages/mojito.html`、`pages/fruity.html`）                    |
-| `app.js`                 | 品項頁入口：載入 `js/item-list/main.js`                                       |
-| `js/item-list/main.js`   | 載入 JSON、篩選器、列表渲染                                                    |
-| `js/item-list/render.js` | 卡片與糖／茶／冰區塊 HTML                                                       |
-| `js/item-list/filters.js`| 糖分／茶量篩選選項邏輯                                                         |
-| `styles.css`             | 樣式                                                                           |
-| `data/mojito.json`       | 品項、步驟、共用步驟文案                                                       |
-| `data/sugar.json`        | 糖階、每組 `sugar_presets` 內含「標準糖分 `base`」與「加料減糖 `with_add_on`」 |
+| 路徑                      | 說明                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| `index.html`              | 入口頁                                                                         |
+| `pages/*.html`            | 分類品項頁（例如 `pages/mojito.html`、`pages/fruity.html`）                    |
+| `app.js`                  | 品項頁入口：載入 `js/item-list/main.js`                                        |
+| `js/item-list/main.js`    | 載入 JSON、篩選器、列表渲染                                                    |
+| `js/item-list/render.js`  | 卡片與糖／茶／冰區塊 HTML                                                      |
+| `js/item-list/filters.js` | 糖分／茶量篩選選項邏輯                                                         |
+| `styles.css`              | 樣式                                                                           |
+| `data/mojito.json`        | 品項、步驟、共用步驟文案                                                       |
+| `data/sugar.json`         | 糖階、每組 `sugar_presets` 內含「標準糖分 `base`」與「加料減糖 `with_add_on`」 |
+
+```graph TD
+A[進入品項: 例如 巧克力歐蕾] --> B{選擇規格}
+B --> C[冰/熱選擇]
+B --> D[加料/不加料]
+
+    C --> C1[冰: 顯示冰塊顆數與冷飲流程]
+    C --> C2[熱: 顯示加熱步驟與熱水比例]
+
+    D --> D1[一般: 顯示標準奶量 300/350/400]
+    D --> D2[加料: 自動換算減量後的奶量 200/250/300]
+
+    C1 & C2 & D1 & D2 --> E[最終作業步驟清單]
+```

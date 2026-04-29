@@ -26,6 +26,20 @@ export async function main() {
     const titleEl = document.getElementById('page-title')
     const subEl = document.getElementById('page-subtitle')
     const grid = document.getElementById('item-grid')
+    if (grid) {
+        grid.addEventListener('click', (event) => {
+            const trigger = event.target.closest('.steps-flow__accordion-trigger')
+            if (!trigger || !grid.contains(trigger)) return
+            const panelId = trigger.getAttribute('aria-controls')
+            if (!panelId) return
+            const panel = document.getElementById(panelId)
+            if (!panel) return
+            const open = trigger.getAttribute('aria-expanded') === 'true'
+            trigger.setAttribute('aria-expanded', open ? 'false' : 'true')
+            trigger.classList.toggle('is-open', !open)
+            panel.hidden = open
+        })
+    }
     const footer = document.getElementById('footer-notes')
     const sugarFilterWrap = document.getElementById('sugar-filter')
     const sugarFilterButtons = sugarFilterWrap?.querySelector(

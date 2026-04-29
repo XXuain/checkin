@@ -416,6 +416,191 @@ body {
   color: var(--accent);
 }
 
+/* 垂直流程圖式步驟（graph TD 風格） */
+.steps-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 0.65rem;
+  max-width: 100%;
+}
+
+.steps-flow__node {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  border: 2px solid #94a3b8;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.steps-flow__badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.steps-flow__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.steps-flow__accordion-trigger {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.steps-flow__accordion-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.steps-flow__chevron {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0.72;
+  transition: transform 0.2s ease;
+}
+
+.steps-flow__accordion-trigger.is-open .steps-flow__chevron {
+  transform: rotate(-180deg);
+}
+
+.steps-flow__accordion-panel.sugar-detail {
+  margin-top: 0;
+  padding-top: 0.5rem;
+  border-top: none;
+}
+
+.steps-flow__accordion-panel--ingredients {
+  margin-top: 0;
+  padding-top: 0.5rem;
+}
+
+.steps-flow__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.15rem 0 0.2rem;
+  gap: 0;
+}
+
+.steps-flow__stem {
+  width: 2px;
+  flex: 1;
+  min-height: 0.5rem;
+  background: linear-gradient(#cbd5e1, #94a3b8);
+  border-radius: 1px;
+}
+
+.steps-flow__arrow {
+  font-size: 1rem;
+  line-height: 1;
+  color: #64748b;
+  font-weight: 700;
+  margin-top: -0.05rem;
+}
+
+/* 檸檬摩奇多：步驟（簡潔編號清單，無漸層、無流程箭頭） */
+.steps-flow--lemon {
+  margin-top: 0.5rem;
+  padding: 0.15rem 0 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.steps-flow--lemon .steps-flow__node {
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.68rem 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.steps-flow--lemon .steps-flow__node:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+
+/* 風琴展開時，標題列底線隱藏（改由下方面板底線分隔步驟） */
+.steps-flow--lemon
+  .steps-flow__node--accordion:has(+ .steps-flow__accordion-panel:not([hidden])) {
+  border-bottom: none;
+}
+
+.steps-flow--lemon .steps-flow__badge {
+  flex-shrink: 0;
+  margin-top: 0.12rem;
+  min-width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 6px;
+  border: 1px solid rgba(134, 239, 172, 1);
+  background-color: rgba(22, 101, 52, 1);
+  color: rgba(134, 239, 172, 1);
+  font-size: 0.76rem;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.steps-flow--lemon .steps-flow__text {
+  font-weight: 400;
+  color: var(--text);
+}
+
+.steps-flow--lemon .steps-flow__accordion-panel.sugar-detail,
+.steps-flow--lemon .steps-flow__accordion-panel--ingredients {
+  margin-left: calc(1.65rem + 0.85rem);
+  padding-top: 0.35rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.steps-flow--lemon .steps-flow__accordion-panel--sugar.sugar-detail,
+.steps-flow--lemon .steps-flow__accordion-panel--ingredients {
+  border-left: 2px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+.steps-flow__accordion-panel .ingredient-list--in-step {
+  margin-top: 0.35rem;
+}
+
+.steps-flow--lemon .steps-flow__link {
+  display: none;
+}
+
 .notes-block {
   margin-top: 0.85rem;
   padding: 0.65rem 0.75rem;
@@ -529,6 +714,7 @@ body {
   .sugar-filter__buttons button.is-active {
     color: var(--accent);
   }
+
 }
 
 @media (max-width: 720px) {
